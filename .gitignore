@@ -1,0 +1,16 @@
+__pycache__/
+*.pyc
+.env
+
+# LaTeX build artifacts
+paper/*.aux
+paper/*.lof
+paper/*.log
+paper/*.lot
+paper/*.out
+paper/*.toc
+
+venv/
+.DS_Store
+*.egg-info/
+.pytest_cache/

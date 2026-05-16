@@ -1,0 +1,7 @@
+period,criterion,count
+2025-2026,impr_down_only,33101
+2025-2026,impr_down_and_land_up,32696
+2025-2026,impr_down_land_up_near_flat,15009
+2025-2026,impr_down_land_up_exact_flat,3336
+2024-2025,impr_down_and_land_up,43
+2024-2025,impr_down_land_up_exact_flat,20
