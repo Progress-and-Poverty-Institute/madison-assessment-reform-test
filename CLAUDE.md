@@ -62,3 +62,16 @@ Key fields per parcel:
   (e.g., `Current Impr`) causes a 400 error. Always URL-encode the full query string.
 - **Where clause encoding:** Operators `<`, `>`, `=` must be URL-encoded when passed as
   query parameters (`%3C`, `%3E`, `%3D`), or use `params=` in requests so it handles encoding.
+- **outFields with specific names causes 400:** Passing a comma-separated list of field names
+  in `outFields` fails with a 400 if any name is wrong. Use `outFields=*` when exploring,
+  then auto-detect the address field name rather than hardcoding it.
+- **LaTeX macro names must be all letters:** `\newcommand{\Land24}` silently treats `\Land`
+  as the command and `24` as following text. Use spelled-out names: `\LandTwentyFour`,
+  `\ExLandPrevOne`, etc. All macros in `headlines.tex` follow this convention.
+- **pandas `applymap` removed in 2.1+:** Use `.map()` instead of `.applymap()` on DataFrames.
+- **CSV index dtype:** `pd.read_csv(..., index_col="assessment_year")` reads year values as
+  integers. Pass `dtype={"assessment_year": str}` to keep them as strings for `.loc["2026"]`
+  lookups.
+- **Windows console encoding:** Printing Unicode (arrows, ±) to a cp1252 terminal raises
+  `UnicodeEncodeError`. Encode with `errors="replace"` for terminal output; CSVs are fine
+  since they're written with explicit `encoding="utf-8"`.
