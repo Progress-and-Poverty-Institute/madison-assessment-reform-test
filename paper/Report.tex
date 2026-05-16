@@ -241,6 +241,68 @@ and the total assessment is unchanged.
   to land, leaving the total assessment unchanged.}
 \end{table}
 
+% -----------------------------------------------------------------------------
+\subsection{Breakdown by Property Class and Use}
+% -----------------------------------------------------------------------------
+
+The methodology shift is concentrated almost entirely in the
+\textbf{Residential} class. Table~\ref{tab:by-class} shows land and
+improvement assessment changes by the three taxable property classes with
+meaningful 2026 values (Exempt and Manufacturing parcels carry zeroed-out
+current values and are excluded).
+
+\begin{table}[htbp]
+  \centering
+  \caption{Assessment changes by property class, 2025$\to$2026.
+           Exempt and Manufacturing parcels excluded (2026 values are zero
+           for fully tax-exempt properties).
+           Source: City of Madison Tax Parcels Feature Service.}
+  \label{tab:by-class}
+  \begin{tabularx}{\textwidth}{@{} X r r r r r @{}}
+    \toprule
+    Class (parcels) & Land YoY & Impr.\ YoY & Total YoY & Impr.$\downarrow$+Land$\uparrow$ & Exact flat \\
+    \midrule
+    Residential (\ParcelsRes{})  & \LandYoYRes{}  & \ImprYoYRes{}  & \TotalYoYRes{}  & \BothRes{} (\BothPctRes{})  & \ExactRes{} \\
+    Commercial  (\ParcelsComm{}) & \LandYoYComm{} & \ImprYoYComm{} & \TotalYoYComm{} & \BothComm{} (\BothPctComm{}) & \ExactComm{} \\
+    Agriculture (\ParcelsAg{})   & \LandYoYAg{}   & \ImprYoYAg{}   & \TotalYoYAg{}   & \BothAg{} (\BothPctAg{})    & \ExactAg{} \\
+    \bottomrule
+  \end{tabularx}
+  \smallskip\noindent\parbox{\linewidth}{\small
+  Exempt and Manufacturing parcels carry zeroed-out 2026 values (fully tax-exempt)
+  and are excluded. The land-up/improvement-down pattern is overwhelmingly residential:
+  only \BothComm{} of \ParcelsComm{} commercial parcels (\BothPctComm{}) show the
+  pattern, versus \BothRes{} of \ParcelsRes{} residential (\BothPctRes{}).}
+\end{table}
+
+Table~\ref{tab:by-use} further disaggregates residential parcels by
+property use. The effect is concentrated in \textbf{single-family homes}
+and \textbf{small multi-family} (2- and 3-unit) properties.
+Condominiums and vacant lots are largely unaffected.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Assessment changes within the Residential class by property use,
+           2025$\to$2026. Source: City of Madison Tax Parcels Feature Service.}
+  \label{tab:by-use}
+  \begin{tabularx}{\textwidth}{@{} X r r r r r @{}}
+    \toprule
+    Property use (parcels) & Land YoY & Impr.\ YoY & Total YoY & Impr.$\downarrow$+Land$\uparrow$ & Exact flat \\
+    \midrule
+    Single family (\ParcelsSF{})    & \LandYoYSF{}        & \ImprYoYSF{}        & \TotalYoYSF{}        & \BothSF{} (\BothPctSF{})               & \ExactSF{} \\
+    Condominium   (\ParcelsCondo{}) & \LandYoYCondo{}     & \ImprYoYCondo{}     & \TotalYoYCondo{}     & \BothCondo{} (\BothPctCondo{})         & \ExactCondo{} \\
+    2-Unit  (\ParcelsTwoUnit{})     & \LandYoYTwoUnit{}   & \ImprYoYTwoUnit{}   & \TotalYoYTwoUnit{}   & \BothTwoUnit{} (\BothPctTwoUnit{})     & \ExactTwoUnit{} \\
+    3-Unit  (\ParcelsThreeUnit{})   & \LandYoYThreeUnit{} & \ImprYoYThreeUnit{} & \TotalYoYThreeUnit{} & \BothThreeUnit{} (\BothPctThreeUnit{}) & \ExactThreeUnit{} \\
+    Vacant  (\ParcelsVac{})         & \LandYoYVac{}       & \ImprYoYVac{}       & \TotalYoYVac{}       & \BothVac{} (\BothPctVac{})             & \ExactVac{} \\
+    \bottomrule
+  \end{tabularx}
+  \smallskip\noindent\parbox{\linewidth}{\small
+  Single-family (\BothPctSF{}) and small multi-family (\BothPctTwoUnit{}--\BothPctThreeUnit{})
+  properties show the pattern at high rates. Condominiums (\BothPctCondo{}) and vacant
+  lots (\BothPctVac{}) are effectively excluded from the shift. Among condominiums
+  that do show the pattern (\BothCondo{} parcels), nearly all (\ExactCondo{}) are
+  exact-flat shifts, suggesting a distinct assessment mechanism for that property type.}
+\end{table}
+
 % =============================================================================
 \section{Verdict}
 % =============================================================================

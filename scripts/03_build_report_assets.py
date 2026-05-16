@@ -1,14 +1,15 @@
 """
 03_build_report_assets.py
 --------------------------
-Read the CSVs produced by scripts 01 and 02, then write
+Read the CSVs produced by scripts 01, 02, and 04, then write
 outputs/tables/headlines.tex — a file of \newcommand macros consumed by
 paper/Report.tex so numbers in the report are always in sync with the data.
 
 Macro naming: all letters only (LaTeX command names cannot contain digits).
   Years: TwentyFour / TwentyFive / TwentySix
-  YoY periods: Prev (2024→2025) / Curr (2025→2026)
+  YoY periods: Prev (2024->2025) / Curr (2025->2026)
   Examples: ordinals One / Two / Three, years Prev / Curr
+  Classes: Res / Comm / Ag (PropertyClass); SF / Condo / TwoUnit / ThreeUnit / Vac (PropertyUse)
 """
 
 import pathlib
@@ -118,6 +119,65 @@ def main() -> None:
             (f"ExImprCurr{ord_name}",   fmt_dollars(row["impr_2026"])),
             (f"ExTotalCurr{ord_name}",  fmt_dollars(row["total_2026"])),
             (f"ExShift{ord_name}",      fmt_dollars(abs(row["land_shift"]))),
+        ]
+
+    # -----------------------------------------------------------------------
+    # By-class totals and patterns (script 04 outputs)
+    # -----------------------------------------------------------------------
+    cls_totals   = pd.read_csv(IN_DIR / "by_class_totals.csv")
+    cls_patterns = pd.read_csv(IN_DIR / "by_class_patterns.csv")
+
+    def get_cls(df: pd.DataFrame, gtype: str, gval: str) -> pd.Series:
+        mask = (df["group_type"] == gtype) & (df["group_value"] == gval)
+        return df[mask].iloc[0]
+
+    def get_pat(gtype: str, gval: str) -> pd.Series:
+        return get_cls(cls_patterns, gtype, gval)
+
+    # PropertyClass macros
+    class_map = {
+        "Residential": "Res",
+        "Commercial":  "Comm",
+        "Agriculture": "Ag",
+    }
+    for cls_name, abbr in class_map.items():
+        row = get_cls(cls_totals, "PropertyClass", cls_name)
+        pat = get_pat("PropertyClass", cls_name)
+        macros += [
+            (f"Land{abbr}Prev",    fmt_billions(row["PreviousLand"])),
+            (f"Impr{abbr}Prev",    fmt_billions(row["PreviousImpr"])),
+            (f"Total{abbr}Prev",   fmt_billions(row["PreviousTotal"])),
+            (f"Land{abbr}Curr",    fmt_billions(row["CurrentLand"])),
+            (f"Impr{abbr}Curr",    fmt_billions(row["CurrentImpr"])),
+            (f"Total{abbr}Curr",   fmt_billions(row["CurrentTotal"])),
+            (f"LandYoY{abbr}",     fmt_pct(row["yoy_land"])),
+            (f"ImprYoY{abbr}",     fmt_pct(row["yoy_impr"])),
+            (f"TotalYoY{abbr}",    fmt_pct(row["yoy_total"])),
+            (f"Both{abbr}",        fmt_count(int(pat["impr_down_land_up"]))),
+            (f"Exact{abbr}",       fmt_count(int(pat["exact_flat"]))),
+            (f"Parcels{abbr}",     fmt_count(int(pat["total_parcels"]))),
+            (f"BothPct{abbr}",     f"{pat['impr_down_land_up'] / pat['total_parcels'] * 100:.1f}\\%"),
+        ]
+
+    # PropertyUse macros (Residential sub-types)
+    use_map = {
+        "Single family": "SF",
+        "Condominium":   "Condo",
+        "2 Unit":        "TwoUnit",
+        "3 Unit":        "ThreeUnit",
+        "Vacant":        "Vac",
+    }
+    for use_name, abbr in use_map.items():
+        row = get_cls(cls_totals, "PropertyUse", use_name)
+        pat = get_pat("PropertyUse", use_name)
+        macros += [
+            (f"LandYoY{abbr}",   fmt_pct(row["yoy_land"])),
+            (f"ImprYoY{abbr}",   fmt_pct(row["yoy_impr"])),
+            (f"TotalYoY{abbr}",  fmt_pct(row["yoy_total"])),
+            (f"Both{abbr}",      fmt_count(int(pat["impr_down_land_up"]))),
+            (f"Exact{abbr}",     fmt_count(int(pat["exact_flat"]))),
+            (f"Parcels{abbr}",   fmt_count(int(pat["total_parcels"]))),
+            (f"BothPct{abbr}",   f"{pat['impr_down_land_up'] / pat['total_parcels'] * 100:.1f}\\%"),
         ]
 
     # -----------------------------------------------------------------------

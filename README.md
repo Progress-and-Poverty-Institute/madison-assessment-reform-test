@@ -22,6 +22,18 @@ The letter's specific claim that the city-wide *total* was "kept the same" is in
 (overall assessments rose 6%), but accurately describes what happened to thousands of
 individual parcels.
 
+**The effect is concentrated almost entirely in residential properties.** Commercial
+land rose just +3.2% while commercial improvements rose +9.0% — the opposite pattern,
+showing no sign of a methodology shift. Within residential:
+
+| Property use | Parcels | Impr↓+Land↑ | % affected |
+|---|---|---|---|
+| Single family | 49,568 | 30,059 | 60.6% |
+| 2-Unit | 3,228 | 2,149 | 66.6% |
+| 3-Unit | 551 | 347 | 63.0% |
+| Condominium | 16,947 | 111 | 0.7% |
+| Vacant land | 1,408 | 0 | 0.0% |
+
 ## Data Source
 
 City of Madison ArcGIS feature service (public, no authentication):
@@ -39,11 +51,14 @@ scripts/
     01_fetch_aggregate.py       Fetch city-wide land/impr sums across three years
     02_fetch_parcels.py         Fetch parcel-level pattern counts + example records
     03_build_report_assets.py   Generate outputs/tables/headlines.tex from CSVs
+    04_fetch_by_class.py        Breakdown by PropertyClass and PropertyUse
 outputs/
     tables/
         city_wide_totals.csv    Raw aggregate sums from API
         parcel_counts.csv       Pattern match counts (current vs. prior year)
         example_parcels.csv     Sample parcels showing the exact shift
+        by_class_totals.csv     Aggregate sums by PropertyClass and PropertyUse
+        by_class_patterns.csv   Pattern counts by PropertyClass and PropertyUse
         headlines.tex           LaTeX macros consumed by paper/Report.tex
 paper/
     Report.tex                  LaTeX source (compile twice with pdflatex)
@@ -61,6 +76,7 @@ C:/Users/druss/miniconda3/python.exe -m pip install -r requirements.txt
 # Fetch data and build report assets (requires internet access)
 C:/Users/druss/miniconda3/python.exe scripts/01_fetch_aggregate.py
 C:/Users/druss/miniconda3/python.exe scripts/02_fetch_parcels.py
+C:/Users/druss/miniconda3/python.exe scripts/04_fetch_by_class.py
 C:/Users/druss/miniconda3/python.exe scripts/03_build_report_assets.py
 
 # Compile PDF

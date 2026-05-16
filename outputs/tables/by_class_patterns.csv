@@ -1,0 +1,9 @@
+group_type,group_value,total_parcels,impr_down_land_up,exact_flat
+PropertyClass,Residential,72348,32675,3326
+PropertyClass,Commercial,6729,19,10
+PropertyClass,Agriculture,416,2,0
+PropertyUse,Single family,49568,30059,3220
+PropertyUse,Condominium,16947,111,106
+PropertyUse,2 Unit,3228,2149,0
+PropertyUse,3 Unit,551,347,0
+PropertyUse,Vacant,1408,0,0

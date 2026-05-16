@@ -42,8 +42,11 @@ Key fields per parcel:
 |--------|-------|--------|
 | `01_fetch_aggregate.py` | ArcGIS REST API | `outputs/tables/city_wide_totals.csv` |
 | `02_fetch_parcels.py` | ArcGIS REST API | `outputs/tables/parcel_counts.csv`, `outputs/tables/example_parcels.csv` |
-| `03_build_report_assets.py` | outputs CSVs | `outputs/tables/headlines.tex` |
+| `04_fetch_by_class.py` | ArcGIS REST API | `outputs/tables/by_class_totals.csv`, `outputs/tables/by_class_patterns.csv` |
+| `03_build_report_assets.py` | all CSVs above | `outputs/tables/headlines.tex` |
 | `paper/Report.tex` | `outputs/tables/headlines.tex` | `paper/Report.pdf` |
+
+Run order: 01 → 02 → 04 → 03 → pdflatex (script 03 reads outputs from 01, 02, and 04).
 
 ## Key Findings (do not change without re-running pipeline)
 
@@ -52,6 +55,11 @@ Key fields per parcel:
 - Prior year (2024→2025): only 43/20 parcels showed these patterns
 - City-wide land jumped +21.7% (2025→2026) vs +1.7% the prior year
 - City-wide improvements rose just +2.1% (2025→2026) vs +10.2% the prior year
+- By class: effect is 99.9% residential (32,675 of 32,696 affected parcels)
+  - Residential land +28.7%, impr -2.5% (2025→2026)
+  - Commercial land +3.2%, impr +9.0% — normal appreciation, no methodology shift
+- Within residential by use: SFH 60.6% affected, 2-unit 66.6%, 3-unit 63.0%, condo 0.7%, vacant 0%
+- Exempt and Manufacturing show zeroed-out CurrentLand (fully exempt) — exclude from YoY analysis
 
 ## Pitfalls
 
